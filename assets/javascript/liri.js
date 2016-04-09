@@ -29,27 +29,26 @@ switch (process.argv[2]) {
 }
 
 function twitter() {
-	console.log('execute twitter');
-
 	var client = new Twitter ({
 	  consumer_key: keysJs.twitterKeys.consumer_key,
 	  consumer_secret: keysJs.twitterKeys.consumer_secret,
 	  access_token_key: keysJs.twitterKeys.access_token_key,
 	  access_token_secret: keysJs.twitterKeys.access_token_secret
 	});
-
 	var params = {screen_name: 'AlexanderChaseJ'};
 
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 		if (!error) {
+			lineBreak();
 			for (var i = 0; i < 20; i++) {
 				if (tweets[i] != undefined) {
-					console.log('"' + tweets[i].text + '"' + ' tweeted on ' + tweets[i].created_at);
-				}
-				else {
-					i=20;
+					console.log(tweets[i].created_at + ':')
+					console.log('  "' + tweets[i].text + '"');
+				}else {
+					i = 20;
 				}
 			}
+			lineBreak();
 		}
 		else {
 			console.log('Error occurred: ' + error);
@@ -65,11 +64,11 @@ function spotify() {
 	    	j = 1
 	    	for (var i = 0; i < 20; i++) {
 		    	if (data.tracks.items[i] != undefined) {
-		    		console.log('=========================================')
+		    		lineBreak();
 		    		console.log('    #' + j)
-		    		console.log('==========================================')
-			    	console.log('Artist Name: ' + data.tracks.items[i].artists[0].name)//Artist name
-			    	console.log('Song Name: ' + data.tracks.items[i].name)//Song name
+		    		lineBreak();
+			    	console.log('Artist: ' + data.tracks.items[i].artists[0].name)//Artist name
+			    	console.log('Song: ' + data.tracks.items[i].name)//Song name
 			    	console.log('Album: ' + data.tracks.items[i].album.name)//Album name
 			    	console.log('Preview Url: ' + data.tracks.items[i].preview_url)//Preview URL
 			    } else {
@@ -77,6 +76,7 @@ function spotify() {
 			    }
 			    j++;
 			}
+			lineBreak();
 	    }
 	    else {
 	    	console.log('Error occurred: ' + error);
@@ -87,16 +87,18 @@ function spotify() {
 
 function movie() {
 	Request('http://www.omdbapi.com/?t=' + input() + '&y=&plot=short&r=json', function (error, response, body) {
-	  if (!error && response.statusCode == 200) {
-	  	body = JSON.parse(body);
-	  	console.log(body.Title);
-	  	console.log(body.Year);
-	  	console.log(body.imdbRating);
-	  	console.log(body.Country);
-	  	console.log(body.Language);
-	  	console.log(body.Plot);
-	  	console.log(body.Actors);
-	  }
+	  	if (!error && response.statusCode == 200) {
+	  		body = JSON.parse(body);
+	  		lineBreak();
+	  		console.log('Title: ' + body.Title);
+	  		console.log('Year: ' + body.Year);
+	  		console.log('IMDB Rating: ' + body.imdbRating);
+	  		console.log('Country: ' + body.Country);
+	  		console.log('Language: ' + body.Language);
+	  		console.log('Plot: ' + body.Plot);
+	  		console.log('Actors: ' + body.Actors);
+	  		lineBreak();
+		}
 	})
 
 
@@ -105,3 +107,7 @@ function movie() {
 function doIt() {
 	console.log('execute the do it');
 };
+
+function lineBreak() {
+	console.log('••••••••••••••••••••••••••••••••••••••')
+}
