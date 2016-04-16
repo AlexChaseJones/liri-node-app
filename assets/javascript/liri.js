@@ -43,6 +43,7 @@ function twitter(screenName) {
 				if (tweets[i] != undefined) {
 					logAndAppend(tweets[i].created_at + ':')
 					logAndAppend('  "' + tweets[i].text + '"');
+					lineBreak();
 				}else {
 					i = 20;
 				}
@@ -114,7 +115,7 @@ function doIt() {
 };
 function lineBreak() {
 	console.log('•••••••••••••••••∆•∆•∆•••••••••••••••••');
-	fs.appendFile('../output/output.txt', '•••••••••••••••••∆•∆•∆•••••••••••••••••', 'utf8', function(error) {
+	fs.appendFile('../output/log.txt', '•••••••••••••••••∆•∆•∆•••••••••••••••••\n', 'utf8', function(error) {
 		if (error) {
 			console.log(error)
 		}
@@ -123,7 +124,7 @@ function lineBreak() {
 
 function logAndAppend(info) {
 	console.log(info);
-	fs.appendFile('../output/log.txt', info, 'utf8', function(error) {
+	fs.appendFile('../output/log.txt', info + '\n', 'utf8', function(error) {
 		if (error) {
 			console.log(error)
 		}
